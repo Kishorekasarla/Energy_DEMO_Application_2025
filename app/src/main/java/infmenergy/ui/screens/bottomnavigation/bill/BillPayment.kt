@@ -24,7 +24,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
@@ -36,6 +36,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.bkvenergy.R
 import com.infmenergy.ui.theme.InfmEnergyTheme
+import infmenergy.ui.screens.widgets.TopBar
 
 @Composable
 fun BillDashboard() {
@@ -43,7 +44,6 @@ fun BillDashboard() {
         modifier = Modifier
             .fillMaxSize()
             .padding(top = 30.dp, start = 10.dp, end = 10.dp, bottom = 10.dp)
-
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -98,7 +98,6 @@ fun ClickableIconWithTitle(iconRes: Int, title: String) {
             .clickable { }
             .fillMaxWidth()
             .padding(1.dp),
-
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
         shape = RoundedCornerShape(15.dp)
     ) {
@@ -160,31 +159,7 @@ fun BillPayment(navHostController: NavHostController) {
                 .fillMaxSize(),
             verticalArrangement = Arrangement.Top,
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(80.dp)
-                    .background(color = colorResource(R.color.Theme_color)),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Image(
-                    painterResource(R.drawable.summitlogowhite),
-                    contentDescription = "",
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.width(120.dp)
-                )
-
-                Image(
-                    painterResource(R.drawable.home_info),
-                    contentDescription = "",
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .size(45.dp)
-                        .padding(end = 16.dp)
-                )
-            }
-
+            TopBar()
 
             Card(
                 modifier = Modifier
@@ -195,7 +170,8 @@ fun BillPayment(navHostController: NavHostController) {
                 shape = RoundedCornerShape(40.dp)
             ) {
                 Column(
-                    modifier = Modifier.padding(end = 5.dp, top = 15.dp),
+                    modifier = Modifier.padding(end = 5.dp, top = 15.dp)
+                            .fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
@@ -209,7 +185,7 @@ fun BillPayment(navHostController: NavHostController) {
                         modifier = Modifier.padding(bottom = 4.dp),
                         text = "$60.30",
                         fontSize = 25.sp,
-                        color = colorResource(R.color.Amount_color),
+                        color = colorResource(R.color.Bkv_theme_color2),
                         fontFamily = FontFamily(Font(R.font.sf_pro_semibold))
                     )
                     Button(
@@ -257,7 +233,7 @@ fun BillPayment(navHostController: NavHostController) {
                 .fillMaxWidth()
                 .align(Alignment.BottomEnd)
                 .fillMaxSize(0.61f)
-        ) {
+            ) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -268,9 +244,7 @@ fun BillPayment(navHostController: NavHostController) {
                     modifier = Modifier.fillMaxSize(),
                     elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
                 ) {
-
                     BillDashboard()
-
                 }
             }
         }

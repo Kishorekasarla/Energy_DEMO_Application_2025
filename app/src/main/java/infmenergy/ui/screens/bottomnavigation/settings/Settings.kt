@@ -21,7 +21,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.bkvenergy.R
+import com.infmenergy.navigation.Screen
 import com.infmenergy.ui.theme.InfmEnergyTheme
+import infmenergy.ui.screens.widgets.TopBar
 
 @Composable
 fun Settings(navHostController: NavHostController) {
@@ -29,33 +31,9 @@ fun Settings(navHostController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFf3f5f9))
+            .background(Color.White)
     ) {
-        // Top bar
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(80.dp)
-                .background(color = colorResource(R.color.Theme_color)),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Image(
-                painterResource(R.drawable.summitlogowhite),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.width(120.dp)
-            )
-
-            Image(
-                painterResource(R.drawable.home_info),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .size(45.dp)
-                    .padding(end = 16.dp)
-            )
-        }
+        TopBar()
 
         // User info section
         Column(
@@ -77,7 +55,7 @@ fun Settings(navHostController: NavHostController) {
 
                 Column {
                     Text(
-                        text = "Mark",
+                        text = "John",
                         fontSize = 22.sp,
                         color = colorResource(id = R.color.Theme_color),
                         fontFamily = FontFamily(Font(R.font.sf_pro_medium))
@@ -108,12 +86,12 @@ fun Settings(navHostController: NavHostController) {
 
                 Column {
                     Text(
-                        text = "3500 Springdale Rd",
+                        text = "4800 Blue Mound Road",
                         fontSize = 12.sp,
                         fontFamily = FontFamily(Font(R.font.sf_pro_regular))
                     )
                     Text(
-                        text = "Fort worth, Dallas - 76123",
+                        text = " Fort Worth, TX 76106",
                         fontSize = 12.sp,
                         fontFamily = FontFamily(Font(R.font.sf_pro_regular))
                     )
@@ -173,8 +151,12 @@ fun Settings(navHostController: NavHostController) {
             }
 
             Button(
-                modifier = Modifier.align(Alignment.CenterHorizontally),
-                onClick = { /*TODO*/ },
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .fillMaxWidth(),
+                onClick = {
+                    navHostController.navigate(Screen.Login.route)
+                },
                 colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.Theme_color))
             ) {
                 Text(text = "LOG OUT", color = Color.White)

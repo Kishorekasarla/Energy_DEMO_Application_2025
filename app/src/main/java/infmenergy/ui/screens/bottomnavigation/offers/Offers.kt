@@ -28,42 +28,20 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.bkvenergy.R
 import com.infmenergy.ui.theme.InfmEnergyTheme
+import infmenergy.ui.screens.widgets.TopBar
 
 @Composable
 fun Offers(navHostController: NavHostController) {
     val context = LocalContext.current
-    val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.summitutilities.com/offers"))
+    val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://bkvenergy.com/"))
 
     Column(
         modifier = Modifier
+            .fillMaxSize()
             .background(color = Color.White)
             .padding(bottom = 20.dp)
     ) {
-        // Top bar row
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(80.dp)
-                .background(color = colorResource(R.color.Theme_color)),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Image(
-                painterResource(R.drawable.summitlogowhite),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.width(120.dp)
-            )
-
-            Image(
-                painterResource(R.drawable.home_info),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .size(45.dp)
-                    .padding(end = 16.dp)
-            )
-        }
+        TopBar()
 
         Column(
             Modifier
@@ -71,7 +49,7 @@ fun Offers(navHostController: NavHostController) {
                 .verticalScroll(rememberScrollState())
         ) {
             Text(
-                text = "Thank you for being a loyal customer. Below are offers brought to you by Summit Utilities.",
+                text = "Thank you for being a loyal customer. Below are offers brought to you by BKV energy.",
                 fontSize = 16.sp,
                 color = Color.Black,
                 modifier = Modifier.padding(bottom = 24.dp),

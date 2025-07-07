@@ -16,8 +16,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.example.bkvenergy.R
 import com.infmenergy.ui.theme.*
 
 @Composable
@@ -42,7 +44,10 @@ fun CheckBoxWithTitle(
                 shape = RoundedCornerShape(4.dp)
             )
             .size(checkBoxSize)
-            .background(if (checkBoxState.value) Neutral80 else Color.Transparent)
+            .background(
+                if (checkBoxState.value) colorResource(R.color.Bkv_theme_color2)
+                else Color.Transparent
+            )
             .clickable {
                 val newValue = !checkBoxState.value
                 onCheckedChange(newValue)

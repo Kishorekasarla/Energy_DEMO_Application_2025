@@ -1,8 +1,10 @@
 package com.infmenergy.ui.screens.login
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -10,8 +12,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -28,214 +28,236 @@ import com.example.bkvenergy.R
 import com.infmenergy.navigation.Screen
 import com.infmenergy.ui.theme.InfmEnergyTheme
 import infmenergy.ui.screens.widgets.CheckBoxWithTitle
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import androidx.compose.runtime.SideEffect
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "SuspiciousIndentation")
 @Composable
 fun LoginScreen(navController: NavController) {
-    val loginScreenViewModel = hiltViewModel<LoginScreenViewModel>()
-    val emailState = remember { mutableStateOf("info@gmail.com") }
-    val passwordState = remember { mutableStateOf("Info@123") }
+    val viewModel = hiltViewModel<LoginScreenViewModel>()
+    val emailState = remember { mutableStateOf("John12@gmail.com") }
+    val passwordState = remember { mutableStateOf("John@123") }
     var checked by remember { mutableStateOf(false) }
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color = colorResource(R.color.Theme_color))
-    ) {
-        Column(
-            modifier = Modifier
-                .padding(top = 2.dp, start = 72.dp, end = 74.dp, bottom = 50.dp)
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Image(
-                painterResource(R.drawable.summitlogowhite),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.size(210.dp)
-            )
-        }
+    val bgColor = colorResource(R.color.white) // Outer background
+    val formBgColor = colorResource(R.color.Theme_color)
+    val accentFocused = colorResource(R.color.Bkv_theme_color2) // #08b894
+    val accentUnfocused = colorResource(R.color.Bkv_theme_color1) // #04b49c
+    val labelColor = colorResource(R.color.Bkv_theme_color5) // #104c8c
+    val textWhite = Color.White
+    val textError = Color.Red
 
         Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.BottomEnd)
-                .fillMaxSize(0.71f)
+                .fillMaxSize()
+                .background(bgColor)
         ) {
-            Card(
-                modifier = Modifier.fillMaxSize(),
-                elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
-                shape = RoundedCornerShape(topStart = 40.dp, topEnd = 40.dp),
+            Spacer(modifier = Modifier.height(80.dp))
+
+            Column(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = 80.dp)
+                    .height(100.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Box(
+                Image(
+                    painter = painterResource(R.drawable.bkv_energy_logo),
+                    contentDescription = null,
+                    Modifier.size(250.dp)
+                )
+            }
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
+                    .fillMaxHeight(0.72f)
+            ) {
+                Card(
                     modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
+                    elevation = CardDefaults.cardElevation(12.dp),
+                    shape = RoundedCornerShape(topStart = 40.dp, topEnd = 40.dp)
                 ) {
-                    Column(
+                    Box(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 20.dp, end = 20.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
+                            .background(formBgColor)
+                            .fillMaxSize(),
+                        contentAlignment = Alignment.Center
                     ) {
-                        val isEmailValid = loginScreenViewModel.isEmailValid(emailState.value)
-                        val isPasswordValid = loginScreenViewModel.isPasswordValid(passwordState.value)
+                        val isEmailValid = viewModel.isEmailValid(emailState.value)
+                        val isPasswordValid = viewModel.isPasswordValid(passwordState.value)
 
-                        Text(
-                            text = stringResource(R.string.login_to_your_account),
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            color = Color.Black,
-                            fontFamily = FontFamily(Font(R.font.sf_pro_semibold)),
+                        Column(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(top = 10.dp, bottom = 10.dp)
-                        )
-
-                        Text(
-                            modifier = Modifier.fillMaxWidth(),
-                            text = stringResource(R.string.e_mail),
-                            fontSize = 13.sp,
-                            color = Color.Black,
-                            fontFamily = FontFamily(Font(R.font.sf_pro_medium))
-                        )
-                        OutlinedTextField(
-                            modifier = Modifier
-                                .padding(top = 6.dp)
-                                .height(58.dp)
-                                .fillMaxWidth(),
-                            value = emailState.value,
-                            onValueChange = { emailState.value = it },
-                            leadingIcon = {
-                                Image(
-                                    painter = painterResource(R.drawable.mail_id),
-                                    contentDescription = null,
-                                    modifier = Modifier
-                                        .padding(start = 10.dp, end = 7.dp)
-                                        .size(40.dp),
-                                )
-                            },
-                            label = {
-                                Text(
-                                    text = stringResource(R.string.your_e_mail),
-                                    fontSize = 14.sp,
-                                    color = if (isEmailValid) Color.Gray else Color.Red,
-                                    fontFamily = FontFamily(Font(R.font.sf_pro_medium))
-                                )
-                            },
-                            shape = RoundedCornerShape(28.dp),
-                            colors = TextFieldDefaults.colors(
-                                focusedIndicatorColor = colorResource(R.color.Theme_color),
-                                unfocusedIndicatorColor = Color.Gray
-                            )
-                        )
-
-                        Text(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 12.dp),
-                            text = stringResource(R.string.password),
-                            fontSize = 14.sp,
-                            color = Color.Black,
-                            fontFamily = FontFamily(Font(R.font.sf_pro_medium))
-                        )
-                        OutlinedTextField(
-                            modifier = Modifier
-                                .padding(top = 6.dp)
-                                .height(58.dp)
-                                .fillMaxWidth(),
-                            value = passwordState.value,
-                            onValueChange = { passwordState.value = it },
-                            leadingIcon = {
-                                Image(
-                                    painter = painterResource(R.drawable.password),
-                                    contentDescription = null,
-                                    modifier = Modifier
-                                        .padding(start = 10.dp, end = 7.dp)
-                                        .size(40.dp),
-                                )
-                            },
-                            label = {
-                                Text(
-                                    text = stringResource(R.string.password_outfield),
-                                    fontSize = 13.sp,
-                                    color = Color.Gray,
-                                    fontFamily = FontFamily(Font(R.font.sf_pro_medium))
-                                )
-                            },
-                            shape = RoundedCornerShape(28.dp),
-                            colors = TextFieldDefaults.colors(
-                                focusedIndicatorColor = colorResource(R.color.Theme_color),
-                                unfocusedIndicatorColor = Color.Gray
-                            )
-                        )
-
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 10.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Start
+                                .padding(horizontal = 24.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center
                         ) {
-                            CheckBoxWithTitle(
-                                checked = checked,
-                                onCheckedChange = { checked = it }
-                            )
                             Text(
-                                text = stringResource(R.string.remember_me),
-                                modifier = Modifier.padding(start = 8.dp),
-                                fontSize = 12.sp,
-                                color = Color.Black,
-                                fontFamily = FontFamily(Font(R.font.sf_pro_regular))
+                                text = stringResource(R.string.login_to_your_account),
+                                fontSize = 24.sp,
+                                fontWeight = FontWeight.SemiBold,
+                                color = textWhite,
+                                fontFamily = FontFamily(Font(R.font.sf_pro_semibold)),
+                                modifier = Modifier.padding(vertical = 12.dp)
                             )
-                        }
 
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 16.dp)
-                        ) {
-                            Button(
-                                onClick = { /* TODO: Register */ },
+                            Spacer(modifier = Modifier.height(8.dp))
+
+                            Text(
+                                modifier = Modifier.fillMaxWidth(),
+                                text = stringResource(R.string.e_mail),
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.SemiBold,
+                                color = textWhite,
+                                fontFamily = FontFamily(Font(R.font.sf_pro_medium))
+                            )
+
+                            Spacer(modifier = Modifier.height(8.dp))
+
+                            OutlinedTextField(
+                                value = emailState.value,
+                                onValueChange = { emailState.value = it },
                                 modifier = Modifier
-                                    .height(32.dp)
-                                    .weight(1f),
-                                colors = ButtonDefaults.buttonColors(containerColor = Color.White),
-                                border = BorderStroke(2.dp, colorResource(R.color.Theme_color)),
-                                shape = RoundedCornerShape(40.dp)
+                                    .fillMaxWidth()
+                                    .padding(bottom = 5.dp),
+                                leadingIcon = {
+                                    Image(
+                                        painter = painterResource(R.drawable.mail_id),
+                                        contentDescription = null,
+                                        modifier = Modifier.size(30.dp)
+                                    )
+                                },
+                                label = {
+                                    Text(
+                                        text = stringResource(R.string.your_e_mail),
+                                        color = if (isEmailValid) textWhite else textError,
+                                        fontFamily = FontFamily(Font(R.font.sf_pro_medium))
+                                    )
+                                },
+                                shape = RoundedCornerShape(28.dp),
+                                colors = OutlinedTextFieldDefaults.colors(
+                                    focusedBorderColor = accentFocused,
+                                    unfocusedBorderColor = accentUnfocused,
+                                    cursorColor = textWhite,
+                                    focusedTextColor = textWhite,
+                                    unfocusedTextColor = textWhite,
+                                    focusedLabelColor = labelColor,
+                                    unfocusedLabelColor = labelColor
+                                ),
+                            )
+
+                            Spacer(modifier = Modifier.height(20.dp))
+
+                            Text(
+                                modifier = Modifier.fillMaxWidth(),
+                                text = stringResource(R.string.password),
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.SemiBold,
+                                color = textWhite,
+                                fontFamily = FontFamily(Font(R.font.sf_pro_medium))
+                            )
+
+                            Spacer(modifier = Modifier.height(8.dp))
+
+                            OutlinedTextField(
+                                value = passwordState.value,
+                                onValueChange = { passwordState.value = it },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(bottom = 5.dp),
+                                leadingIcon = {
+                                    Image(
+                                        painter = painterResource(R.drawable.password),
+                                        contentDescription = null,
+                                        modifier = Modifier.size(30.dp)
+                                    )
+                                },
+                                label = {
+                                    Text(
+                                        text = stringResource(R.string.password_outfield),
+                                        color = if (isPasswordValid) textWhite else textError,
+                                        fontFamily = FontFamily(Font(R.font.sf_pro_medium))
+                                    )
+                                },
+                                shape = RoundedCornerShape(28.dp),
+
+                                colors = OutlinedTextFieldDefaults.colors(
+                                    focusedBorderColor = accentFocused,
+                                    unfocusedBorderColor = accentUnfocused,
+                                    cursorColor = textWhite,
+                                    focusedTextColor = Color.Black,
+                                    unfocusedTextColor = Color.Black,
+                                    focusedLabelColor = textWhite,
+                                    unfocusedLabelColor = textWhite,
+                                ),
+                                visualTransformation = PasswordVisualTransformation()
+                            )
+
+                            Spacer(modifier = Modifier.height(20.dp))
+
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.Start
                             ) {
+                                CheckBoxWithTitle(
+                                    checked = checked,
+                                    onCheckedChange = { checked = it }
+                                )
+                                Spacer(modifier = Modifier.width(8.dp))
                                 Text(
-                                    text = stringResource(R.string.register),
-                                    fontSize = 12.sp,
-                                    color = colorResource(R.color.Theme_color)
+                                    text = stringResource(R.string.remember_me),
+                                    fontSize = 20.sp,
+                                    color = textWhite,
+                                    fontFamily = FontFamily(Font(R.font.sf_pro_regular))
                                 )
                             }
 
-                            Spacer(modifier = Modifier.width(16.dp))
+                            Spacer(modifier = Modifier.height(20.dp))
 
-                            Button(
-                                onClick = {
-                                    val email = emailState.value
-                                    val password = passwordState.value
-                                    if (loginScreenViewModel.isEmailValid(email) &&
-                                        loginScreenViewModel.isPasswordValid(password)
-                                    ) {
-                                        loginScreenViewModel.login(email, password)
-                                        navController.navigate(Screen.Home.route)
-                                    }
-                                },
-                                modifier = Modifier
-                                    .height(32.dp)
-                                    .weight(1f),
-                                colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.Theme_color)),
-                                border = BorderStroke(2.dp, colorResource(R.color.Theme_color)),
-                                shape = RoundedCornerShape(40.dp)
-                            ) {
-                                Text(
-                                    text = stringResource(R.string.login_button),
-                                    fontSize = 12.sp,
-                                    color = Color.White
-                                )
+                            Row(modifier = Modifier.fillMaxWidth()) {
+                                Button(
+                                    onClick = { /* register logic */ },
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .height(48.dp),
+                                    colors = ButtonDefaults.buttonColors(containerColor = textWhite),
+                                    border = BorderStroke(2.dp, accentFocused),
+                                    shape = RoundedCornerShape(40.dp)
+                                ) {
+                                    Text(
+                                        text = stringResource(R.string.register),
+                                        fontSize = 20.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        color = formBgColor
+                                    )
+                                }
+
+                                Spacer(modifier = Modifier.width(16.dp))
+
+                                Button(
+                                    onClick = {
+                                        if (isEmailValid && isPasswordValid) {
+                                            viewModel.login(emailState.value, passwordState.value)
+                                            navController.navigate(Screen.Home.route)
+                                        }
+                                    },
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .height(48.dp),
+                                    colors = ButtonDefaults.buttonColors(containerColor = accentFocused),
+                                    shape = RoundedCornerShape(40.dp)
+                                ) {
+                                    Text(
+                                        text = stringResource(R.string.login_button),
+                                        fontSize = 20.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        color = formBgColor
+                                    )
+                                }
                             }
                         }
                     }
@@ -243,13 +265,21 @@ fun LoginScreen(navController: NavController) {
             }
         }
     }
-}
 
 @Preview(showBackground = true)
 @Composable
-fun DefaultPreview() {
+fun PreviewLoginScreen() {
     InfmEnergyTheme {
         val navController = rememberNavController()
         LoginScreen(navController)
+    }
+}
+
+
+@Composable
+fun setStatusBarColor(color: Color = Color.Transparent, useDarkIcons: Boolean) {
+    val systemUiController = rememberSystemUiController()
+    SideEffect {
+        systemUiController.setStatusBarColor(color = color, darkIcons = useDarkIcons)
     }
 }

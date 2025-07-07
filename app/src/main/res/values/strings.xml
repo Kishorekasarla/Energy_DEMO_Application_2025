@@ -25,7 +25,7 @@
     <string name="remember_me">Remember me</string>
     <string name="register">Register</string>
     <string name="login_button">Login</string>
-    <string name="hello_mark">Hello Mark,</string>
+    <string name="hello_john">Hello John,</string>
     <string name="welcome_back">Welcome Back!</string>
     <string name="amount">+$60.30 Credit</string>
     <string name="Dates">"Jan 01, 2022  -  Dec 31, 2022 "</string>
@@ -39,14 +39,16 @@
     <string name="you_are_eligible_to_change_plans">You are eligible to Change plans</string>
     <string name="my_plan">My Plan</string>
     <string name="plan_change_pending">Plan change pending</string>
-    <string name="a_change_of_plan_text01">A change of plan request is in progress. your request to change to the green texas 12 was submitted on 26-10-2023.</string>
+    <string name="a_change_of_plan_text01">A change of plan request is in progress. your request to change to the green texas 12 was submitted on 06-07-2025.</string>
     <string name="a_change_of_plan_text02">We are currently updating your account. You will be able to view this plan in your online profile once your plan change has been processed.</string>
     <string name="key_features">Key Features</string>
     <string name="average_price_13_9_per_kwh_based_on_2000_kwh_includes_the_following">Average price 13.9 per Ccf based on 2000 Ccf\nincludes the following:</string>
     <string name="energy_charge_per_kwh_15_833">Gas charge per Ccf: 15.833$\n</string>
     <string name="please_refer_to_your_el_for_other_details_about_your_plan">Please refer to your EFL for other details about your plan.</string>
-    <string name="this_pricing_was_effective_as_of_06_06_2023">This pricing was effective as of: 06/06/2023</string>
+    <string name="this_pricing_was_effective_as_of_06_06_2023">This pricing was effective as of: 06/07/2025</string>
     <string name="based_charge_per_month_4_95">Based charge per month: $4.95</string>
     <string name="free_power_weekends_24">Free Gas Weekends 24</string>
     <string name="if_a_cancellation_fee_is_hsown_it_applies_until_you_recieve_your_contract_expiration_notice">If a cancellation fee is shown, it applies until you receive your contract expiration notice.</string>
+    <string name="autopay">AutoPay</string>
+    <string name="sign_up_now">Sign up now</string>
 </resources>

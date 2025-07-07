@@ -2,18 +2,7 @@ package com.infmenergy.ui.screens.myplan
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -22,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -35,78 +23,49 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.bkvenergy.R
 import com.infmenergy.ui.theme.InfmEnergyTheme
+import infmenergy.ui.screens.widgets.TopBar
 
 @Composable
 fun MyPlan(navHostController: NavController) {
-
-    Box(
+    Column(
         modifier = Modifier
-            .fillMaxWidth()
             .fillMaxSize()
-            .background(color = colorResource(R.color.Theme_color))
+            .background(color = colorResource(R.color.Theme_color)),
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(80.dp)
-                .background(color = colorResource(R.color.Theme_color)),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Image(
-                painterResource(R.drawable.summitlogowhite),
-                contentDescription = "",
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.width(120.dp)
-            )
 
-            Image(
-                painterResource(R.drawable.home_info),
-                contentDescription = "",
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .size(45.dp)
-                    .padding(end = 16.dp)
-            )
-        }
+        TopBar()
+
         Column(
             modifier = Modifier
-                .padding(start = 30.dp, top = 30.dp, end = 45.dp, bottom = 30.dp),
-
-            ) {
-
+                .padding(start = 20.dp, top = 50.dp, end = 20.dp, bottom = 20.dp)
+                .fillMaxSize()
+                .background(color = colorResource(R.color.Theme_color)),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
 
             Text(
-                modifier = Modifier
-                    .padding(start = 20.dp, end = 20.dp, top = 25.dp),
                 text = "My Plan",
-                fontSize = 30.sp,
+                fontSize = 28.sp,
                 color = colorResource(R.color.white),
                 fontFamily = FontFamily(Font(R.font.sf_pro_semibold))
             )
+
+            // First Card - Plan Change Pending
             Card(
                 modifier = Modifier
-
-                    .height(220.dp)
-                    .clickable { }
-                    .fillMaxWidth()
-                    .padding(top = 25.dp),
-
-
+                    .weight(0.25f)
+                    .fillMaxWidth(),
                 elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-
                 shape = RoundedCornerShape(35.dp)
-
             ) {
                 Column(
-                    modifier = Modifier
-                        .padding(start = 20.dp, end = 20.dp, top = 20.dp),
+                    modifier = Modifier.padding(20.dp),
+                    verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = Alignment.Start
                 ) {
                     Text(
-                        modifier = Modifier
-                            .padding(top = 5.dp, bottom = 15.dp),
                         text = stringResource(R.string.plan_change_pending),
-                        fontSize = 19.sp,
+                        fontSize = 18.sp,
                         color = colorResource(R.color.Theme_color),
                         fontFamily = FontFamily(Font(R.font.sf_pro_semibold))
                     )
@@ -117,7 +76,6 @@ fun MyPlan(navHostController: NavController) {
                         color = Color.Gray,
                         fontFamily = FontFamily(Font(R.font.sf_pro_semibold))
                     )
-                    Spacer(modifier = Modifier.size(8.dp))
                     Text(
                         text = stringResource(R.string.a_change_of_plan_text02),
                         fontSize = 11.sp,
@@ -126,70 +84,65 @@ fun MyPlan(navHostController: NavController) {
                         fontFamily = FontFamily(Font(R.font.sf_pro_semibold))
                     )
                 }
-
-
             }
 
-
+            // Second Card - Free Power Weekends 24
             Card(
                 modifier = Modifier
-
-                    .height(260.dp)
-                    .clickable { }
-                    .fillMaxWidth()
-                    .padding(top = 25.dp),
-
+                    .weight(0.4f)
+                    .fillMaxWidth(),
                 elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
                 shape = RoundedCornerShape(35.dp)
-
             ) {
                 Column(
-                    modifier = Modifier
-                        .padding(start = 20.dp, end = 20.dp, top = 20.dp),
-
-                    ) {
+                    modifier = Modifier.padding(20.dp),
+                    verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = Alignment.Start
+                ) {
                     Text(
-                        modifier = Modifier
-                            .padding(top = 5.dp, bottom = 10.dp),
                         text = stringResource(R.string.free_power_weekends_24),
-                        fontSize = 19.sp,
+                        fontSize = 18.sp,
                         color = colorResource(R.color.Theme_color),
                         fontFamily = FontFamily(Font(R.font.sf_pro_semibold))
                     )
 
-                    Row() {
-                        Column {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Start,
+                        verticalAlignment = Alignment.Top
+                    ) {
+                        Column(
+                            modifier = Modifier.weight(1f)
+                        ) {
                             Text(
-                                text = "Contract Term:\n" +
-                                        "24 Months",
+                                text = "Contract Term:\n24 Months",
                                 fontSize = 11.sp,
                                 lineHeight = 15.sp,
                                 color = Color.Black,
                                 fontFamily = FontFamily(Font(R.font.sf_pro_semibold))
                             )
-                            Spacer(modifier = Modifier.size(8.dp))
+                            Spacer(modifier = Modifier.height(6.dp))
                             Text(
-                                text = "Plan expires on:\n" +
-                                        "Apr 23, 2024",
+                                text = "Plan expires on:\ndec 23, 2025",
                                 fontSize = 11.sp,
                                 lineHeight = 15.sp,
                                 color = Color.Black,
                                 fontFamily = FontFamily(Font(R.font.sf_pro_semibold))
                             )
-
-                            Spacer(modifier = Modifier.size(8.dp))
+                            Spacer(modifier = Modifier.height(6.dp))
                             Text(
-                                text = "Early Cancellation Fee:\n" +
-                                        "\$135",
+                                text = "Early Cancellation Fee:\n\$135",
                                 fontSize = 11.sp,
                                 lineHeight = 15.sp,
                                 color = Color.Black,
                                 fontFamily = FontFamily(Font(R.font.sf_pro_semibold))
                             )
                         }
+
+                        Spacer(modifier = Modifier.width(24.dp))
+
                         Column(
-                            modifier = Modifier
-                                .padding(start = 35.dp),
+                            modifier = Modifier.weight(1f)
                         ) {
                             Text(
                                 text = "Download Information",
@@ -197,60 +150,14 @@ fun MyPlan(navHostController: NavController) {
                                 color = Color.DarkGray,
                                 fontFamily = FontFamily(Font(R.font.sf_pro_semibold))
                             )
-
-                            Row(modifier = Modifier.padding(top = 3.dp)) {
-                                Image(
-                                    painterResource(R.drawable.pdf),
-                                    contentDescription = "",
-                                    contentScale = ContentScale.Crop,
-                                    modifier = Modifier.size(10.dp)
-                                )
-                                Text(
-                                    modifier = Modifier.padding(start = 3.dp),
-                                    text = "Terms of Service",
-                                    fontSize = 11.sp,
-                                    color = colorResource(R.color.Theme_color),
-                                    fontFamily = FontFamily(Font(R.font.sf_pro_semibold))
-                                )
-                            }
-
-                            Row(modifier = Modifier.padding(top = 5.dp)) {
-                                Image(
-                                    painterResource(R.drawable.pdf),
-                                    contentDescription = "",
-                                    contentScale = ContentScale.Crop,
-                                    modifier = Modifier.size(10.dp)
-                                )
-                                Text(
-                                    modifier = Modifier.padding(start = 3.dp),
-                                    text = "Customer Rights",
-                                    fontSize = 11.sp,
-                                    color = colorResource(R.color.Theme_color),
-                                    fontFamily = FontFamily(Font(R.font.sf_pro_semibold))
-                                )
-                            }
-                            Row(modifier = Modifier.padding(top = 3.dp)) {
-                                Image(
-                                    painterResource(R.drawable.pdf),
-                                    contentDescription = "",
-                                    contentScale = ContentScale.Crop,
-                                    modifier = Modifier.size(10.dp)
-                                )
-                                Text(
-                                    modifier = Modifier.padding(start = 3.dp),
-                                    text = "Disclosure Statement",
-                                    fontSize = 11.sp,
-                                    color = colorResource(R.color.Theme_color),
-                                    fontFamily = FontFamily(Font(R.font.sf_pro_semibold))
-                                )
-                            }
+                            PdfRow(label = "Terms of Service")
+                            PdfRow(label = "Customer Rights")
+                            PdfRow(label = "Disclosure Statement")
                         }
-
                     }
 
-                    Spacer(modifier = Modifier.size(8.dp))
-
                     Text(
+                        modifier = Modifier.padding(top = 12.dp),
                         text = stringResource(R.string.if_a_cancellation_fee_is_hsown_it_applies_until_you_recieve_your_contract_expiration_notice),
                         fontSize = 11.sp,
                         lineHeight = 17.sp,
@@ -258,57 +165,53 @@ fun MyPlan(navHostController: NavController) {
                         fontFamily = FontFamily(Font(R.font.sf_pro_medium))
                     )
                 }
-
             }
+
+            // Third Card - Key Features
             Card(
                 modifier = Modifier
-                    .height(240.dp)
-                    .clickable { }
-                    .fillMaxWidth()
-                    .padding(top = 25.dp),
+                    .weight(0.3f)
+                    .fillMaxWidth(),
                 elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
                 shape = RoundedCornerShape(35.dp)
             ) {
                 Column(
-                    modifier = Modifier
-                        .padding(start = 20.dp, end = 20.dp, top = 20.dp),
-
-                    ) {
+                    modifier = Modifier.padding(20.dp),
+                    verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = Alignment.Start
+                ) {
                     Text(
-                        modifier = Modifier
-                            .padding(top = 5.dp, bottom = 10.dp),
                         text = stringResource(R.string.key_features),
-                        fontSize = 19.sp,
+                        fontSize = 18.sp,
                         color = colorResource(R.color.Theme_color),
                         fontFamily = FontFamily(Font(R.font.sf_pro_semibold))
                     )
                     Text(
-
                         text = stringResource(R.string.average_price_13_9_per_kwh_based_on_2000_kwh_includes_the_following),
                         fontSize = 11.sp,
                         lineHeight = 15.sp,
                         color = Color.Gray,
                         fontFamily = FontFamily(Font(R.font.sf_pro_medium))
                     )
-                    Spacer(modifier = Modifier.size(8.dp))
                     Text(
+                        modifier = Modifier.padding(top = 8.dp),
                         text = stringResource(R.string.energy_charge_per_kwh_15_833) +
                                 stringResource(R.string.based_charge_per_month_4_95),
-                        fontSize = 15.sp,
+                        fontSize = 14.sp,
                         lineHeight = 17.sp,
                         color = Color.Black,
                         fontFamily = FontFamily(Font(R.font.sf_pro_semibold))
                     )
-                    Spacer(modifier = Modifier.size(8.dp))
                     Text(
+                        modifier = Modifier.padding(top = 8.dp),
                         text = stringResource(R.string.this_pricing_was_effective_as_of_06_06_2023),
-                        fontSize = 12.sp,
+                        fontSize = 11.sp,
                         lineHeight = 15.sp,
                         color = Color.Gray,
                         fontFamily = FontFamily(Font(R.font.sf_pro_semibold))
                     )
-                    Spacer(modifier = Modifier.size(8.dp))
                     Text(
+                        modifier = Modifier.padding(top = 8.dp),
                         text = stringResource(R.string.please_refer_to_your_el_for_other_details_about_your_plan),
                         fontSize = 11.sp,
                         lineHeight = 15.sp,
@@ -316,9 +219,26 @@ fun MyPlan(navHostController: NavController) {
                         fontFamily = FontFamily(Font(R.font.sf_pro_semibold))
                     )
                 }
-
             }
         }
+    }
+}
+
+@Composable
+fun PdfRow(label: String) {
+    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 4.dp)) {
+        Image(
+            painterResource(R.drawable.pdf),
+            contentDescription = "pdf icon",
+            modifier = Modifier.size(12.dp)
+        )
+        Spacer(modifier = Modifier.width(6.dp))
+        Text(
+            text = label,
+            fontSize = 11.sp,
+            color = colorResource(R.color.Theme_color),
+            fontFamily = FontFamily(Font(R.font.sf_pro_semibold))
+        )
     }
 }
 

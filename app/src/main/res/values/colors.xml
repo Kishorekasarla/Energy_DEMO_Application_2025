@@ -7,6 +7,12 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="Theme_color">#1c6ba4</color>
+    <color name="Theme_color">#094e89</color>
     <color name="Amount_color">#008000</color>
+
+    <color name="Bkv_theme_color1">#04b49c</color>
+    <color name="Bkv_theme_color2">#08b894</color>
+    <color name="Bkv_theme_color3">#0c4c8c</color>
+    <color name="Bkv_theme">#084c98</color>
+    <color name="Bkv_theme_color5">#104c8c</color>
 </resources>

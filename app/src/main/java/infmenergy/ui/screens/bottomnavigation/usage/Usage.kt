@@ -1,7 +1,6 @@
 package com.infmenergy.ui.screens.bottomnavigation.usage
 
 import android.util.Log
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
@@ -28,9 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -56,6 +52,7 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.infmenergy.ui.theme.InfmEnergyTheme
+import infmenergy.ui.screens.widgets.TopBar
 import kotlin.math.roundToInt
 
 data class BarChartInput(
@@ -158,6 +155,8 @@ fun WeeklyScreen() {
     val xLabels = listOf("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
     val yLabels = listOf(0, 5, 10, 15, 20) // Customize your y-axis labels here
 
+    Spacer(modifier = Modifier.height(10.dp))
+
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -178,12 +177,13 @@ fun WeeklyScreen() {
             modifier = Modifier
                 .weight(1f) // Use weight to take available vertical space
                 .fillMaxWidth()
-                .background(color = Color.White
+                .background(
+                    color = Color.White
                 )
                 .padding(20.dp), // Background color for the graph area with padding
             contentAlignment = Alignment.Center
         ) {
-          BarChart(
+            BarChart(
                 data = data,
                 xLabels = xLabels,
                 yLabels = yLabels,
@@ -198,8 +198,6 @@ fun WeeklyScreen() {
 }
 
 
-
-
 @Composable
 fun Usage(navController: NavController) {
     var tabIndex by remember { mutableStateOf(0) }
@@ -212,38 +210,16 @@ fun Usage(navController: NavController) {
             .background(Color.White)
 
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(80.dp)
-                .background(color = colorResource(R.color.Theme_color)),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.summitlogowhite), // Replace with your logo resource
-                contentDescription = "Logo",
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .width(120.dp)
-            )
-
-            Image(
-                painter = painterResource(id = R.drawable.home_info), // Replace with your icon resource
-                contentDescription = "Info",
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .size(45.dp)
-            )
-        }
-
+        TopBar()
 
         TabRow(
             selectedTabIndex = tabIndex,
+            containerColor = colorResource(R.color.Theme_color),
+        contentColor=colorResource(R.color.white),
             indicator = { tabPositions ->
                 TabRowDefaults.Indicator(
                     modifier = Modifier.tabIndicatorOffset(tabPositions[tabIndex]),
-                    color = Color.Black
+                    color = colorResource(R.color.Bkv_theme_color1)
                 )
             },
             tabs = {
@@ -266,40 +242,82 @@ fun Usage(navController: NavController) {
 
 @Composable
 fun DailyScreen() {
+    val data = listOf(
+        BarChartInput(3, "12AM", color = colorResource(R.color.Theme_color)),
+        BarChartInput(5, "4AM", color = colorResource(R.color.Theme_color)),
+        BarChartInput(8, "8AM", color = colorResource(R.color.Theme_color)),
+        BarChartInput(6, "12PM", color = colorResource(R.color.Theme_color)),
+        BarChartInput(10, "4PM", color = colorResource(R.color.Theme_color)),
+        BarChartInput(7, "8PM", color = colorResource(R.color.Theme_color)),
+        BarChartInput(4, "11PM", color = colorResource(R.color.Theme_color))
+    )
 
+    val xLabels = listOf("12AM", "4AM", "8AM", "12PM", "4PM", "8PM", "11PM")
+    val yLabels = listOf(0, 2, 4, 6, 8, 10) // Adjust based on max usage
 
+    Spacer(modifier = Modifier.height(10.dp))
 
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "Daily Data",
+            fontWeight = FontWeight.Bold,
+            color = Color.Black,
+            fontSize = 30.sp,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth()
+        )
 
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth()
+                .background(Color.White)
+                .padding(20.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            BarChart(
+                data = data,
+                xLabels = xLabels,
+                yLabels = yLabels,
+                modifier = Modifier.align(Alignment.Center)
+            )
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+    }
 }
+
 @Composable
 fun AnnualScreen() {
     val usageContainerHeight = 500.dp
 
-
-    Row(
-        modifier = Modifier
-            .padding(horizontal = 5.dp)
-            .fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-    ) {
-        /*ParagraphSmall(
-            text = vm.uiState.usageUnit?.toString().orPlaceholder(),
-            color = MaterialTheme.colors.neutral01
-        )
-
-        ParagraphSmall(
-            text = tempLabel,
-            color = MaterialTheme.colors.neutral01
-        )*/
-    }
-
-    val colorPrimary = Color(0xFF332892)
-    val colorPink =  Color(0xFFEF37A0)
-    val colorNeutral02 =  Color(0xFF7B797A)
+    val colorPrimary = colorResource(id = R.color.Theme_color)
+    val colorPink = Color(0xFFEF37A0)
+    val colorNeutral02 = Color(0xFF7B797A)
     val colorNeutral01 = Color(0xFF231F20)
     val colorNeutral05 = Color(0xFFE4E4E4)
     val colorNeutral06 = Color(0xFFEDEDED)
-    val colorTransparent =  Color(0x00FFFFFF)
+    val colorTransparent = Color(0x00FFFFFF)
+
+    Spacer(modifier = Modifier.height(10.dp))
+
+    Text(
+        text = "Annual Data",
+        fontWeight = FontWeight.Bold,
+        color = Color.Black,
+        fontSize = 30.sp,
+        textAlign = TextAlign.Center,
+        modifier = Modifier
+            .fillMaxWidth()
+    )
+
+    Spacer(modifier = Modifier.height(16.dp))
 
     AndroidView(
         modifier = Modifier
@@ -366,7 +384,7 @@ fun AnnualScreen() {
             val temperatureData = LineData()
             val temperatureDataEntries: List<Entry> = emptyList()
 
-            Log.d("Temp","Temp: $temperatureDataEntries")
+            Log.d("Temp", "Temp: $temperatureDataEntries")
 
             val temperatureDataSet = LineDataSet(temperatureDataEntries, "")
 
@@ -455,34 +473,34 @@ fun AnnualScreen() {
                 }
 
 
-                    setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
-                        override fun onValueSelected(entry: Entry?, highlight: Highlight?) {
-                            Log.d("onValueSelected","onValueSelected: $entry")
+                setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
+                    override fun onValueSelected(entry: Entry?, highlight: Highlight?) {
+                        Log.d("onValueSelected", "onValueSelected: $entry")
 
-                            entry?.let {
-                                //vm.selectMonth(it.x)
-                            }
-
-                            usageDataSet.color = colorNeutral05.toLegacyColor()
-
-                            temperatureDataSet.apply {
-                                setDrawCircles(false)
-                                color = colorNeutral06.toLegacyColor()
-                            }
+                        entry?.let {
+                            //vm.selectMonth(it.x)
                         }
 
-                        override fun onNothingSelected() {
-                            Log.d("onNothingSelected","onNothingSelected")
+                        usageDataSet.color = colorNeutral05.toLegacyColor()
 
-                            usageDataSet.color = colorPrimary.toLegacyColor()
-
-                            temperatureDataSet.apply {
-                                setDrawCircles(true)
-                                color = colorPink.toLegacyColor()
-                            }
-
+                        temperatureDataSet.apply {
+                            setDrawCircles(false)
+                            color = colorNeutral06.toLegacyColor()
                         }
-                    })
+                    }
+
+                    override fun onNothingSelected() {
+                        Log.d("onNothingSelected", "onNothingSelected")
+
+                        usageDataSet.color = colorPrimary.toLegacyColor()
+
+                        temperatureDataSet.apply {
+                            setDrawCircles(true)
+                            color = colorPink.toLegacyColor()
+                        }
+
+                    }
+                })
 
             }
         }
@@ -546,15 +564,21 @@ class YearAxisFormatter(private val xAxisLabels: List<String>) : ValueFormatter(
     }
 }
 
-fun getDataPoints() : List<UsageDataPoint> = mutableListOf(
-    UsageDataPoint(cost = 109.206, month = "Jan", usage = 666.6660, year = "2023"),
-    UsageDataPoint(cost = 99.0, month = "Feb", usage = 567.160, year = "2023"),
-    UsageDataPoint(cost = 83.0, month = "Mar", usage = 448.118, year = "2023"),
-    UsageDataPoint(cost = 110.116, month = "Apr", usage = 667.1364, year = "2023"),
-    UsageDataPoint(cost = 120.302, month = "May", usage = 670.1202, year = "2023"),
-    UsageDataPoint(cost = 77.77, month = "Jun", usage = 434.7770, year = "2023"),
-    UsageDataPoint(cost = 89.206, month = "Jul", usage = 422.6660, year = "2023")
+fun getDataPoints(): List<UsageDataPoint> = listOf(
+    UsageDataPoint(cost = 109.206, month = "Jan", usage = 666.6660, year = "2025"),
+    UsageDataPoint(cost = 99.0, month = "Feb", usage = 567.160, year = "2025"),
+    UsageDataPoint(cost = 83.0, month = "Mar", usage = 448.118, year = "2025"),
+    UsageDataPoint(cost = 110.116, month = "Apr", usage = 667.1364, year = "2025"),
+    UsageDataPoint(cost = 120.302, month = "May", usage = 670.1202, year = "2025"),
+    UsageDataPoint(cost = 77.77, month = "Jun", usage = 434.7770, year = "2025"),
+    UsageDataPoint(cost = 89.206, month = "Jul", usage = 422.6660, year = "2025"),
+    UsageDataPoint(cost = 0.0, month = "Aug", usage = 0.0, year = "2025"),
+    UsageDataPoint(cost = 0.0, month = "Sep", usage = 0.0, year = "2025"),
+    UsageDataPoint(cost = 0.0, month = "Oct", usage = 0.0, year = "2025"),
+    UsageDataPoint(cost = 0.0, month = "Nov", usage = 0.0, year = "2025"),
+    UsageDataPoint(cost = 0.0, month = "Dec", usage = 0.0, year = "2025")
 )
+
 
 data class UsageDataPoint(
     val cost: Double? = null,
@@ -586,7 +610,7 @@ fun Color.toLegacyColor(): Int {
     )
 }
 
-enum class UsageUnit{
+enum class UsageUnit {
     KWH,
     CCF;
 }
