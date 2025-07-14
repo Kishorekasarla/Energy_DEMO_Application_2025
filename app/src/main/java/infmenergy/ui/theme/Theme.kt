@@ -11,16 +11,19 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.colorResource
 import androidx.core.view.WindowCompat
+import com.example.bkvenergy.R
 
 private val DarkColorPalette = darkColorScheme(
-    primary = Purple80,
+
+    primary = ThemeColor,
     secondary = PurpleGrey80,
     tertiary = Pink80
 )
 
 private val LightColorPalette = lightColorScheme(
-    primary = Purple40,
+    primary = ThemeColor,
     secondary = PurpleGrey40,
     tertiary = Pink40
 )

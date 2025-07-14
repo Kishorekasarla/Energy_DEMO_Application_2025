@@ -96,9 +96,10 @@ fun BottomNavigationUI(navController: NavController) {
                                 if (isSelected) Modifier
                                     .background(
                                         color = colorResource(R.color.Bkv_theme_color2),
-                                        shape = RoundedCornerShape(8.dp)
+                                        shape = RoundedCornerShape(8.dp),
+
                                     )
-                                    .padding(horizontal = 12.dp, vertical = 8.dp)
+                                    .padding(horizontal = 8.dp, vertical = 8.dp)
                                 else Modifier
                             )
                     ) {
@@ -112,7 +113,7 @@ fun BottomNavigationUI(navController: NavController) {
                         }
                     }
                 },
-                alwaysShowLabel = false, // We're rendering label manually
+                alwaysShowLabel = false,
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor = Color.White,
                     unselectedIconColor = Color.White.copy(alpha = 0.4f),

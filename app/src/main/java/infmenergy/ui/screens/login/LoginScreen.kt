@@ -65,7 +65,7 @@ fun LoginScreen(navController: NavController) {
                 Image(
                     painter = painterResource(R.drawable.bkv_energy_logo),
                     contentDescription = null,
-                    Modifier.size(250.dp)
+                    Modifier.size(230.dp)
                 )
             }
 

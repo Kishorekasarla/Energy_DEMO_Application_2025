@@ -9,9 +9,10 @@ val Pink80 = Color(0xFFEFB8C8)
 val Purple40 = Color(0xFF1C6BA4)
 val PurpleGrey40 = Color(0xFF625B71)
 val Pink40 = Color(0xFF7D5260)
-
+val ThemeColor = Color(0xFF094E89)
 // Corrected (was 0xFFFFFFF with 7 Fs, fixed to 6 Fs)
 val DefaultBackgroundColor = Color(0xFFFFFFFF)
+
 
 // Added Material 3 Neutral Colors
 

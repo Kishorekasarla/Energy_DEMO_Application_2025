@@ -73,7 +73,7 @@ sealed class Screen(val route : String,
         )
     })
 
-    object AccountNav : Screen("accounts_screen", title = R.string.accounts, navIcon = {
+    object AccountNav : Screen("accounts_screen", title = R.string.account, navIcon = {
         Icon(
             Icons.Filled.AccountBox,
             contentDescription = "search",
